@@ -12,6 +12,7 @@
 @media(max-width:760px){.catalog-toolbar{grid-template-columns:1fr;padding:12px}.product-grid{grid-template-columns:1fr}.product-card{padding:13px;gap:10px}.product-actions{gap:6px}.product-add{padding:9px 10px}}
 @media(max-width:390px){.product-card{align-items:flex-start}.product-actions{flex-direction:column;align-items:stretch}.product-actions .icon-btn{align-self:flex-end}.product-add{font-size:12px;padding:8px}}
 
-/* v5: área de toque reforçada para marcar itens concluídos */
-.item-check{display:flex;align-items:center;justify-content:center;min-width:42px;min-height:46px;margin:-8px;position:relative;z-index:5;cursor:pointer;touch-action:manipulation;pointer-events:auto}
-.item-check input[type=checkbox]{display:block;width:24px;height:24px;margin:0;position:relative;z-index:6;cursor:pointer;pointer-events:auto;accent-color:#26734d}
+/* v6: checkbox por botão para garantir resposta direta ao toque/clique */
+button.item-check{appearance:none;-webkit-appearance:none;border:2px solid #8b9bb0;border-radius:6px;background:#fff;color:#fff;display:flex;align-items:center;justify-content:center;width:26px;height:26px;min-width:26px;min-height:26px;padding:0;margin:0;cursor:pointer;touch-action:manipulation;position:relative;z-index:10;box-shadow:none;font:700 17px/1 system-ui;pointer-events:auto}
+button.item-check.is-checked{background:#26734d;border-color:#26734d;color:#fff}
+button.item-check:focus-visible{outline:3px solid #8fc5ff;outline-offset:3px}
