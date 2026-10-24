@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#173b68"><meta name="description" content="Lista de compras Shakaw, com orçamento e sincronização.">
-  <link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="styles.css?v=4">
   <title>Shakaw • Lista de Compras</title>
 </head>
 <body>
@@ -29,11 +29,12 @@
     <div id="items" class="items"><div class="empty">Sua lista está vazia. Adicione o primeiro produto acima.</div></div>
     <div class="bottom-actions"><button id="finishList" class="primary">Finalizar compra e salvar histórico</button><button id="newList" class="ghost">Nova lista</button></div>
   </section>
-  <section id="productsView" class="view hidden"><div class="section-heading"><div><h2>Produtos frequentes</h2><p>Adicione novamente à lista com um toque.</p></div></div><div id="frequentItems" class="items"></div></section>
+  <section id="productsView" class="view hidden"><div class="section-heading"><div><h2>Catálogo de produtos</h2><p>Produtos pré-cadastrados para adicionar à lista com um toque.</p><p id="catalogCount" class="catalog-count">Carregando catálogo…</p></div></div><div class="catalog-toolbar"><label class="catalog-search"><span>Buscar produto</span><input id="productSearch" type="search" placeholder="Ex.: arroz, leite, detergente…" autocomplete="off"></label><label class="catalog-filter"><span>Categoria</span><select id="productCategory"><option value="">Todas as categorias</option></select></label></div><div id="frequentItems" class="product-grid"></div></section>
   <section id="historyView" class="view hidden"><div class="section-heading"><div><h2>Histórico de compras</h2><p>Compras finalizadas neste dispositivo ou sincronizadas.</p></div></div><div id="historyItems" class="history-list"></div></section>
   <section class="sync-card"><div class="sync-icon">☁</div><div><strong>Sincronização familiar</strong><p id="syncMessage">Este protótipo salva os dados neste dispositivo. Configure o Supabase para compartilhar com a Jô e sincronizar entre aparelhos.</p></div><button id="setupInfo" class="ghost">Configurar</button></section>
   <footer>Shakaw • Lista de Compras <span>Seus dados locais ficam neste navegador.</span></footer>
 </main>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
 <dialog id="setupDialog"><form method="dialog" class="dialog-content"><button class="close" aria-label="Fechar">×</button><h2>Ativar nuvem e compartilhamento</h2><p>Para compartilhar com a Jô, crie um projeto no Supabase e configure as variáveis no arquivo <code>app.js</code>. O arquivo <code>supabase-schema.sql</code> contém a estrutura inicial e as políticas de segurança.</p><ol><li>Crie um projeto no Supabase.</li><li>Execute o SQL fornecido no SQL Editor.</li><li>Configure URL e chave pública (anon/publishable) em <code>app.js</code>.</li><li>Publique o site em HTTPS e crie contas separadas para vocês.</li></ol><p><strong>Importante:</strong> não coloque chave secreta/service_role no navegador. Esta versão inicial ainda não sincroniza com a nuvem até a configuração e integração do backend.</p><button class="primary" value="close">Entendi</button></form></dialog>
 <section id="accountPanel" class="account-panel">
   <div class="account-head"><div><strong>Conta e família</strong><p id="authStatus">Conectando ao Supabase…</p></div><button id="authToggle" class="ghost" type="button">Entrar / criar conta</button></div>
@@ -46,6 +47,6 @@
   <div id="householdPanel" class="household-panel hidden"><p id="householdStatus"></p><form id="householdForm"><div class="field"><label for="householdName">Nome da família</label><input id="householdName" maxlength="80" value="Família Shakaw" required></div><button class="primary" type="submit">Criar família</button></form></div>
 </section>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="auth.js"></script>
-<script src="app.js"></script>
+<script src="auth.js?v=4"></script>
+<script src="app.js?v=4"></script>
 </body></html>
