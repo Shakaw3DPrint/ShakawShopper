@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#173b68"><meta name="description" content="Lista de compras Shakaw, com orçamento e sincronização.">
+  <link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="styles.css">
+  <title>Shakaw • Lista de Compras</title>
+</head>
+<body>
+<header class="topbar"><div class="brand-mark">S</div><div><strong>Shakaw</strong><span>Lista de Compras</span></div><div class="top-actions"><span id="connection" class="status">● Offline/local</span><button id="installBtn" class="ghost hidden">Instalar app</button></div></header>
+<main>
+  <section class="summary-grid">
+    <article class="summary"><span>Estimativa da lista</span><strong id="estimated">R$ 0,00</strong><small>Com base nos preços informados</small></article>
+    <article class="summary"><span>Valor comprado</span><strong id="actual">R$ 0,00</strong><small id="itemsProgress">0 de 0 itens concluídos</small></article>
+  </section>
+  <section class="budget-panel"><div><label for="budget">Orçamento máximo (R$)</label><input id="budget" type="number" min="0" step="0.01" placeholder="Ex.: 600,00"></div><div class="budget-right"><strong id="remaining">Defina um orçamento</strong><div class="progress"><div id="budgetBar"></div></div></div></section>
+  <nav class="tabs"><button class="tab active" data-view="list">Lista atual</button><button class="tab" data-view="products">Produtos frequentes</button><button class="tab" data-view="history">Histórico</button></nav>
+  <section id="listView" class="view">
+    <form id="addForm" class="add-form">
+      <div class="field wide"><label for="name">Produto</label><input id="name" required maxlength="100" placeholder="Ex.: Leite integral"></div>
+      <div class="field"><label for="qty">Quantidade</label><input id="qty" type="number" min="0.01" step="0.01" value="1" required></div>
+      <div class="field"><label for="unit">Unidade</label><select id="unit"><option>un.</option><option>kg</option><option>g</option><option>L</option><option>ml</option><option>pacote</option><option>caixa</option></select></div>
+      <div class="field"><label for="price">Preço previsto (R$)</label><input id="price" type="number" min="0" step="0.01" placeholder="0,00"></div>
+      <div class="field"><label for="category">Categoria</label><select id="category"><option>Mercearia</option><option>Hortifruti</option><option>Carnes e frios</option><option>Laticínios</option><option>Padaria</option><option>Bebidas</option><option>Limpeza</option><option>Higiene</option><option>Farmácia</option><option>Outros</option></select></div>
+      <div class="field wide"><label for="aisle">Corredor / local (opcional)</label><input id="aisle" maxlength="60" placeholder="Ex.: Corredor 4, congelados"></div>
+      <button class="primary add-button" type="submit">＋ Adicionar produto</button>
+    </form>
+    <div class="list-toolbar"><div><h2>Itens da compra</h2><p id="listMeta">Sua lista começa aqui.</p></div><div class="toolbar-actions"><select id="filterCategory" aria-label="Filtrar por categoria"><option value="">Todas as categorias</option></select><button id="clearChecked" class="ghost">Limpar concluídos</button></div></div>
+    <div id="items" class="items"><div class="empty">Sua lista está vazia. Adicione o primeiro produto acima.</div></div>
+    <div class="bottom-actions"><button id="finishList" class="primary">Finalizar compra e salvar histórico</button><button id="newList" class="ghost">Nova lista</button></div>
+  </section>
+  <section id="productsView" class="view hidden"><div class="section-heading"><div><h2>Produtos frequentes</h2><p>Adicione novamente à lista com um toque.</p></div></div><div id="frequentItems" class="items"></div></section>
+  <section id="historyView" class="view hidden"><div class="section-heading"><div><h2>Histórico de compras</h2><p>Compras finalizadas neste dispositivo ou sincronizadas.</p></div></div><div id="historyItems" class="history-list"></div></section>
+  <section class="sync-card"><div class="sync-icon">☁</div><div><strong>Sincronização familiar</strong><p id="syncMessage">Este protótipo salva os dados neste dispositivo. Configure o Supabase para compartilhar com a Jô e sincronizar entre aparelhos.</p></div><button id="setupInfo" class="ghost">Configurar</button></section>
+  <footer>Shakaw • Lista de Compras <span>Seus dados locais ficam neste navegador.</span></footer>
+</main>
+<dialog id="setupDialog"><form method="dialog" class="dialog-content"><button class="close" aria-label="Fechar">×</button><h2>Ativar nuvem e compartilhamento</h2><p>Para compartilhar com a Jô, crie um projeto no Supabase e configure as variáveis no arquivo <code>app.js</code>. O arquivo <code>supabase-schema.sql</code> contém a estrutura inicial e as políticas de segurança.</p><ol><li>Crie um projeto no Supabase.</li><li>Execute o SQL fornecido no SQL Editor.</li><li>Configure URL e chave pública (anon/publishable) em <code>app.js</code>.</li><li>Publique o site em HTTPS e crie contas separadas para vocês.</li></ol><p><strong>Importante:</strong> não coloque chave secreta/service_role no navegador. Esta versão inicial ainda não sincroniza com a nuvem até a configuração e integração do backend.</p><button class="primary" value="close">Entendi</button></form></dialog>
+<section id="accountPanel" class="account-panel">
+  <div class="account-head"><div><strong>Conta e família</strong><p id="authStatus">Conectando ao Supabase…</p></div><button id="authToggle" class="ghost" type="button">Entrar / criar conta</button></div>
+  <form id="authForm" class="auth-form hidden">
+    <div class="field"><label for="authEmail">E-mail</label><input id="authEmail" type="email" autocomplete="email" required placeholder="voce@exemplo.com"></div>
+    <div class="field"><label for="authPassword">Senha</label><input id="authPassword" type="password" autocomplete="current-password" minlength="8" required placeholder="Mínimo 8 caracteres"></div>
+    <div class="auth-actions"><button class="primary" type="submit" data-auth-action="login">Entrar</button><button class="ghost" type="button" id="signupBtn">Criar conta</button><button class="ghost hidden" type="button" id="logoutBtn">Sair</button></div>
+    <p id="authMessage" role="status"></p>
+  </form>
+  <div id="householdPanel" class="household-panel hidden"><p id="householdStatus"></p><form id="householdForm"><div class="field"><label for="householdName">Nome da família</label><input id="householdName" maxlength="80" value="Família Shakaw" required></div><button class="primary" type="submit">Criar família</button></form></div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
+<script src="app.js"></script>
+</body></html>
